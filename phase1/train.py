@@ -293,7 +293,7 @@ def main():  # pylint: disable=unused-argument
     parser.add_argument('--num_channels', default= 3 , type= int, action= 'store', help= 'The number of channels in input images')
     parser.add_argument('--num_epochs', default= 55, type= int, action= 'store', help= 'The number of epochs')
     parser.add_argument('--path_prefix', default= '/project/EvolvingAI/mnorouzz/Serengiti/EmptyVsFullEQ/', action='store', help= 'the prefix address for images')
-    parser.add_argument('--data_info', default= 'EF_train.csv', action= 'store', help= 'Name of the file containing addresses and labels of training images')
+    parser.add_argument('--data_info', default= 'train.txt', action= 'store', help= 'Name of the file containing addresses and labels of training images')
     parser.add_argument('--shuffle', default= True, type= bool, action= 'store',help= 'Shuffle training data or not')
     parser.add_argument('--num_threads', default= 20, type= int, action='store', help= 'The number of threads for loading data')
     parser.add_argument('--log_dir', default= None, action= 'store', help= 'Path for saving Tensorboard info and checkpoints')
@@ -330,9 +330,9 @@ def main():  # pylint: disable=unused-argument
     print(args)
     print("Saving everything in "+args.log_dir)
 
-    if tf.gfile.Exists(args.log_dir):
-      tf.gfile.DeleteRecursively(args.log_dir)
-    tf.gfile.MakeDirs(args.log_dir)
+    if tf.io.gfile.Exists(args.log_dir):
+      tf.io.gfile.DeleteRecursively(args.log_dir)
+    tf.io.gfile.MakeDirs(args.log_dir)
  
     train(args)
 
