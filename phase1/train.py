@@ -292,7 +292,7 @@ def main():  # pylint: disable=unused-argument
     parser.add_argument('--top_n', default= 2 , type=int, action='store', help= 'Top N accuracy')
     parser.add_argument('--num_channels', default= 3 , type= int, action= 'store', help= 'The number of channels in input images')
     parser.add_argument('--num_epochs', default= 55, type= int, action= 'store', help= 'The number of epochs')
-    parser.add_argument('--path_prefix', default= '/project/EvolvingAI/mnorouzz/Serengiti/EmptyVsFullEQ/', action='store', help= 'the prefix address for images')
+    parser.add_argument('--path_prefix', default= '/dfs6/pub/hackathon/DATASETS/SERENGETI/DOWNLOADED/S8', action='store', help= 'the prefix address for images')
     parser.add_argument('--data_info', default= 'train.txt', action= 'store', help= 'Name of the file containing addresses and labels of training images')
     parser.add_argument('--shuffle', default= True, type= bool, action= 'store',help= 'Shuffle training data or not')
     parser.add_argument('--num_threads', default= 20, type= int, action='store', help= 'The number of threads for loading data')
@@ -303,7 +303,7 @@ def main():  # pylint: disable=unused-argument
     parser.add_argument('--run_name', default= 'Run'+str(time.strftime("-%d-%m-%Y_%H-%M-%S")), action= 'store', help= 'Name of the experiment')
     parser.add_argument('--num_gpus', default= 1, type= int, action= 'store', help= 'Number of GPUs')
     parser.add_argument('--log_device_placement', default= False, type= bool, help= 'Whether to log device placement or not')
-    parser.add_argument('--delimiter', default= ',', action= 'store', help= 'Delimiter of the input files')
+    parser.add_argument('--delimiter', default= ' ', action= 'store', help= 'Delimiter of the input files')
     parser.add_argument('--retrain_from', default= None, action= 'store', help= 'Continue Training from a snapshot file')
     parser.add_argument('--log_debug_info', default= False, action= 'store', help= 'Logging runtime and memory usage info')
     parser.add_argument('--num_batches', default= -1, type= int, action= 'store', help= 'The number of batches per epoch')
@@ -330,9 +330,9 @@ def main():  # pylint: disable=unused-argument
     print(args)
     print("Saving everything in "+args.log_dir)
 
-    if tf.io.gfile.Exists(args.log_dir):
+    if tf.io.gfile.exists(args.log_dir):
       tf.io.gfile.DeleteRecursively(args.log_dir)
-    tf.io.gfile.MakeDirs(args.log_dir)
+    tf.io.gfile.makedirs(args.log_dir)
  
     train(args)
 
