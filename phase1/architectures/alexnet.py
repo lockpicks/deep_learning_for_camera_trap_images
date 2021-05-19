@@ -1,5 +1,5 @@
 import tensorflow.compat.v1 as tf
-import common
+from architectures import common
 
 def inference(x, num_output, wd, dropout_rate, is_training):
     

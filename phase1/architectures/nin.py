@@ -1,5 +1,5 @@
 import tensorflow.compat.v1 as tf
-import common
+from architectures import common
 
 def block(x, spec, wd, is_training):
   with tf.variable_scope('conv1'):
