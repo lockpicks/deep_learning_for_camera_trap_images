@@ -1,4 +1,4 @@
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import common
 
 def inference(x, num_output, wd, dropout_rate, is_training):

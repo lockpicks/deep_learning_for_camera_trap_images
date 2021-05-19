@@ -1,4 +1,4 @@
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import common
 
 def inception(x, conv1_size, conv3_size, conv5_size, pool1_size, wd, is_training):

@@ -27,16 +27,16 @@ def read_inputs(is_training, args):
 
   # Create a queue that produces the filenames to read.
   if is_training:
-    filename_queue = tf.train.slice_input_producer([filenames, labels], shuffle= args.shuffle, capacity= 1024)
+    filename_queue = tf.compat.v1.train.slice_input_producer([filenames, labels], shuffle= args.shuffle, capacity= 1024)
   else:
-    filename_queue = tf.train.slice_input_producer([filenames, labels], shuffle= False,  capacity= 1024, num_epochs =1)
+    filename_queue = tf.compat.v1.train.slice_input_producer([filenames, labels], shuffle= False,  capacity= 1024, num_epochs =1)
 
   # Read examples from files in the filename queue.
-  file_content = tf.read_file(filename_queue[0])
+  file_content = tf.compat.v1.read_file(filename_queue[0])
   # Read JPEG or PNG or GIF image from file
-  reshaped_image = tf.to_float(tf.image.decode_jpeg(file_content, channels=args.num_channels))
+  reshaped_image = tf.compat.v1.to_float(tf.compat.v1.image.decode_jpeg(file_content, channels=args.num_channels))
   # Resize image to 256*256
-  reshaped_image = tf.image.resize_images(reshaped_image, args.load_size)
+  reshaped_image = tf.compat.v1.image.resize_images(reshaped_image, args.load_size)
 
   label = tf.cast(filename_queue[1], tf.int64)
   img_info = filename_queue[0]
@@ -57,7 +57,7 @@ def read_inputs(is_training, args):
 
   # Load images and labels with additional info 
   if hasattr(args, 'save_predictions') and args.save_predictions is not None:
-    images, label_batch, info = tf.train.batch(
+    images, label_batch, info = tf.compat.v1.train.batch(
         [reshaped_image, label, img_info],
         batch_size= batch_size,
         num_threads=args.num_threads,
@@ -65,7 +65,7 @@ def read_inputs(is_training, args):
         allow_smaller_final_batch=True if not is_training else False)
     return images, label_batch, info
   else:
-    images, label_batch = tf.train.batch(
+    images, label_batch = tf.compat.v1.train.batch(
         [reshaped_image, label],
         batch_size= batch_size,
         allow_smaller_final_batch= True if not is_training else False,
@@ -79,21 +79,21 @@ def _train_preprocess(reshaped_image, args):
   # distortions applied to the image.
 
   # Randomly crop a [height, width] section of the image.
-  reshaped_image = tf.random_crop(reshaped_image, [args.crop_size[0], args.crop_size[1], args.num_channels])
+  reshaped_image = tf.compat.v1.random_crop(reshaped_image, [args.crop_size[0], args.crop_size[1], args.num_channels])
 
   # Randomly flip the image horizontally.
-  reshaped_image = tf.image.random_flip_left_right(reshaped_image)
+  reshaped_image = tf.compat.v1.image.random_flip_left_right(reshaped_image)
 
   # Because these operations are not commutative, consider randomizing
   # the order their operation.
-  reshaped_image = tf.image.random_brightness(reshaped_image,
+  reshaped_image = tf.compat.v1.image.random_brightness(reshaped_image,
                                                max_delta=63)
   # Randomly changing contrast of the image
-  reshaped_image = tf.image.random_contrast(reshaped_image,
+  reshaped_image = tf.compat.v1.image.random_contrast(reshaped_image,
                                              lower=0.2, upper=1.8)
 
   # Subtract off the mean and divide by the variance of the pixels.
-  reshaped_image = tf.image.per_image_standardization(reshaped_image)
+  reshaped_image = tf.compat.v1.image.per_image_standardization(reshaped_image)
 
   # Set the shapes of tensors.
   reshaped_image.set_shape([args.crop_size[0], args.crop_size[1], args.num_channels])

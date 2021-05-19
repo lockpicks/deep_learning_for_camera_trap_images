@@ -1,4 +1,4 @@
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import re
 from tensorflow.python.training import moving_averages
 from tensorflow.python.ops import control_flow_ops
