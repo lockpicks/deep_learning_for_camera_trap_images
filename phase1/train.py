@@ -330,9 +330,9 @@ def main():  # pylint: disable=unused-argument
     print(args)
     print("Saving everything in "+args.log_dir)
 
-    if tf.io.gfile.Exists(args.log_dir):
+    if tf.io.gfile.exists(args.log_dir):
       tf.io.gfile.DeleteRecursively(args.log_dir)
-    tf.io.gfile.MakeDirs(args.log_dir)
+    tf.io.gfile.makedirs(args.log_dir)
  
     train(args)
 
