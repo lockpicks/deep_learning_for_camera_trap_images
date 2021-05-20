@@ -303,7 +303,7 @@ def main():  # pylint: disable=unused-argument
     parser.add_argument('--run_name', default= 'Run'+str(time.strftime("-%d-%m-%Y_%H-%M-%S")), action= 'store', help= 'Name of the experiment')
     parser.add_argument('--num_gpus', default= 1, type= int, action= 'store', help= 'Number of GPUs')
     parser.add_argument('--log_device_placement', default= False, type= bool, help= 'Whether to log device placement or not')
-    parser.add_argument('--delimiter', default= ',', action= 'store', help= 'Delimiter of the input files')
+    parser.add_argument('--delimiter', default= ' ', action= 'store', help= 'Delimiter of the input files')
     parser.add_argument('--retrain_from', default= None, action= 'store', help= 'Continue Training from a snapshot file')
     parser.add_argument('--log_debug_info', default= False, action= 'store', help= 'Logging runtime and memory usage info')
     parser.add_argument('--num_batches', default= -1, type= int, action= 'store', help= 'The number of batches per epoch')
